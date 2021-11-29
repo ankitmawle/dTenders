@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <!-- Moralis SDK code -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+</head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('./web/img/mac.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
+<body onload="login()">
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    dTENDERS
+  </div>
+  <div class="w3-display-middle">
+    <h1 id="instructions" class="w3-jumbo w3-animate-top">Get started by connecting your wallet  </h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+   <button class="w3-large w3-center" id="btn-login"> Login</button>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    Developed by <a href="deltiin.in" target="_blank">Ankit Mawle</a>
+  </div>
+</div>
+<script>
+  // connect to Moralis server
+    const serverUrl = "https://ffkvbnrtpnxu.usemoralis.com:2053/server";
+    const appId = "XPEOMm8PphplaioLfVWo4dgUUqALWKunBYKSxjey";
+    const RegisterABI= [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_Heading",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_Description",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_Agency",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_openingtime",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lastSubmissionTime",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_fileLoc",
+				"type": "string"
+			}
+		],
+		"name": "createTender",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getRandomness",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTenderFee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getuserDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "Name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "Company",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "email",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "phone_number",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "kyc",
+						"type": "bool"
+					},
+					{
+						"internalType": "address",
+						"name": "Address",
+						"type": "address"
+					}
+				],
+				"internalType": "struct Register.user",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "randomResult",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "requestId",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "randomness",
+				"type": "uint256"
+			}
+		],
+		"name": "rawFulfillRandomness",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "Name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Company",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "phone_number",
+				"type": "string"
+			}
+		],
+		"name": "registerUser",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "requestRandomNumber",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "requestId",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "tenders",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "Name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Company",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "phone_number",
+				"type": "string"
+			}
+		],
+		"name": "updateUserDetails",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "userTenders",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "userlist",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
+    Moralis.start({ serverUrl, appId });
+    let user = Moralis.User.current();
+    const web3 = await Moralis.enableWeb3();
+    const contract = new web3.eth.Contract(contractAbi, );
+    const options = {
+        contractAddress: "0xe...56",
+        functionName: "getuserDetails",
+        abi: RegisterABI,
+        params: {
+            owner: "0x2...45",
+            spender: "0x3...49"
+        },
+        };
+    if (!user) {
+        window.location.href="./app";
+    }
+    const web3 = await Moralis.enableWeb3();
+    const registerContract = new web3.eth.Contract(, contractAddress);
+    //window.location.href="./register";
+
+    //console.log("logged in user:", user);
+  
+
+</script>
+</body>
+</html>
+
+
+
+
+
+<!--
+<html>
+  <head>
+    
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  </head>
+  <body>
+    <h1>Gas Stats With Moralis</h1>
+
+    <button id="btn-login">Moralis Login</button>
+    <button id="btn-logout">Logout</button>
+
+    <script>
+        // connect to Moralis server
+        const serverUrl = "https://ffkvbnrtpnxu.usemoralis.com:2053/server";
+        const appId = "XPEOMm8PphplaioLfVWo4dgUUqALWKunBYKSxjey";
+        Moralis.start({ serverUrl, appId });
+        // add from here down
+        async function login() {
+          let user = Moralis.User.current();
+          if (!user) {
+            user = await Moralis.authenticate();
+          }
+          console.log("logged in user:", user);
+        }
+        async function logOut() {
+          await Moralis.User.logOut();
+          console.log("logged out");
+        }
+        document.getElementById("btn-login").onclick = login;
+        document.getElementById("btn-logout").onclick = logOut;
+      </script>
+  </body>
+</html> -->

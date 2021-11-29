@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <!-- Moralis SDK code -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+</head>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('./web/img/mac.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
+<body onload="login()">
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    dTENDERS
+  </div>
+  <div class="w3-display-middle">
+    <h1 id="instructions" class="w3-jumbo w3-animate-top">Get started by connecting your wallet  </h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+   <button class="w3-large w3-center" id="btn-login"> Login</button>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    Developed by <a href="deltiin.in" target="_blank">Ankit Mawle</a>
+  </div>
+</div>
+<script>
+  // connect to Moralis server
+  const serverUrl = "https://ffkvbnrtpnxu.usemoralis.com:2053/server";
+  const appId = "XPEOMm8PphplaioLfVWo4dgUUqALWKunBYKSxjey";
+  Moralis.start({ serverUrl, appId });
+  // add from here down
+  async function login() {
+    let user = Moralis.User.current();
+    if (!user) {
+      user = await Moralis.authenticate();
+    }
+    else{window.location.href="./register";}
+
+    console.log("logged in user:", user);
+  }
+  async function logOut() {
+    await Moralis.User.logOut();
+    console.log("logged out");
+  }
+  document.getElementById("btn-login").onclick = login;
+  document.getElementById("btn-logout").onclick = logOut;
+</script>
+</body>
+</html>
+
+
+
+
+
+<!--
+<html>
+  <head>
+    
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+  </head>
+  <body>
+    <h1>Gas Stats With Moralis</h1>
+
+    <button id="btn-login">Moralis Login</button>
+    <button id="btn-logout">Logout</button>
+
+    <script>
+        // connect to Moralis server
+        const serverUrl = "https://ffkvbnrtpnxu.usemoralis.com:2053/server";
+        const appId = "XPEOMm8PphplaioLfVWo4dgUUqALWKunBYKSxjey";
+        Moralis.start({ serverUrl, appId });
+        // add from here down
+        async function login() {
+          let user = Moralis.User.current();
+          if (!user) {
+            user = await Moralis.authenticate();
+          }
+          console.log("logged in user:", user);
+        }
+        async function logOut() {
+          await Moralis.User.logOut();
+          console.log("logged out");
+        }
+        document.getElementById("btn-login").onclick = login;
+        document.getElementById("btn-logout").onclick = logOut;
+      </script>
+  </body>
+</html> -->
